@@ -24,9 +24,9 @@ public class JsonUtils {
             JSONObject name = jsonObject.getJSONObject("name");
             mainName = name.getString("mainName");
             alsoKnownAs = name.getJSONArray("alsoKnownAs");
-            ArrayList<String> arrayList = new ArrayList<String>();
+            ArrayList<String> alsoKnownList = new ArrayList<String>();
             for (int i = 0; i < alsoKnownAs.length(); i++) {
-                arrayList.add(alsoKnownAs.getString(i));
+                alsoKnownList.add(alsoKnownAs.getString(i));
             }
             placeOfOrigin = jsonObject.getString("placeOfOrigin");
             description = jsonObject.getString("description");
@@ -36,11 +36,10 @@ public class JsonUtils {
             for (int i = 0; i < ingredients.length(); i++) {
                 inList.add(ingredients.getString(i));
 
-                sandwich1 = new Sandwich(mainName, arrayList, placeOfOrigin, description, image, inList);
+                sandwich1 = new Sandwich(mainName, alsoKnownList, placeOfOrigin, description, image, inList);
 
             }
-        }
-        catch (JSONException e) {
+        }        catch (JSONException e) {
             e.printStackTrace();
         }
         return sandwich1;

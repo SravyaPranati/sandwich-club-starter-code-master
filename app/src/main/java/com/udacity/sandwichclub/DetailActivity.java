@@ -53,9 +53,15 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         populateUI(sandwich);
-        Picasso.with(this)
-                .load(sandwich.getImage())
-                .into(ingredientsIv);
+        if(!sandwich.getImage().isEmpty())
+        {
+            Picasso.with(this)
+                    .load(sandwich.getImage())
+                    .into(ingredientsIv);
+        }
+        else {
+            Picasso.with(this).load(sandwich.getImage()).placeholder(R.mipmap.ic_launcher).into(ingredientsIv);
+        }
 
         setTitle(sandwich.getMainName());
     }
@@ -66,9 +72,9 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void populateUI(Sandwich sandwich) {
-        if(sandwich.getAlsoKnownAs()!=null && sandwich.getAlsoKnownAs().size()>0) {
+        if(!sandwich.getAlsoKnownAs().isEmpty() && sandwich.getAlsoKnownAs().size()>0) {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(sandwich.getAlsoKnownAs().get(0));
+           stringBuilder.append(sandwich.getAlsoKnownAs().get(0));
             for (int i = 1; i < sandwich.getAlsoKnownAs().size(); i++) {
                 stringBuilder.append(",");
                 stringBuilder.append(sandwich.getAlsoKnownAs().get(i));
@@ -76,9 +82,28 @@ public class DetailActivity extends AppCompatActivity {
             }
             aName.setText(stringBuilder.toString());
         }
-        desc.setText(sandwich.getDescription());
-        origin.setText(sandwich.getPlaceOfOrigin());
-        if(sandwich.getIngredients()!=null && sandwich.getIngredients().size()>0)
+        else
+        {
+            aName.setText("Data is not available");
+        }
+        if(desc.getText()!=null) {
+            desc.setText(sandwich.getDescription());
+        }
+        else
+        {
+            desc.setText("Data is not available");
+        }
+        if(origin.getText()!=null) {
+            origin.setText(sandwich.getPlaceOfOrigin());
+        }
+        else
+        {
+
+            origin.setText("Data is not available");
+
+        }
+
+        if(!sandwich.getIngredients().isEmpty() && sandwich.getIngredients().size()>0)
         {
             StringBuilder builder = new StringBuilder();
             builder.append(sandwich.getIngredients().get(0));
@@ -87,6 +112,10 @@ public class DetailActivity extends AppCompatActivity {
                 builder.append(sandwich.getIngredients().get(i));
             }
             ingredient.setText(builder.toString());
+        }
+        else
+        {
+            ingredient.setText("Data is not available");
         }
 
 
